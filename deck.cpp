@@ -1,6 +1,8 @@
 #include <iostream>
 #include "deck.h"
 #include <vector>
+#include <cstdlib>
+#include <stdexcept>
 
 //used to reset the game, we are ading back all the cards into
 //the deck
@@ -23,8 +25,39 @@ void Deck::resetDeck() {
 
 //displays everything in the current deck
 void Deck::displayDeck() {
-    for (auto elem : currentDeck) {
-        std::cout << elem << ", ";
+    int i = 0;
+    for (auto elem : currentDeck)
+    {
+        std::cout << elem;
+        i++;
+        if (i != currentDeck.size()) {
+            std::cout << ", ";
+        }
     }
     std::cout << std::endl;
+}
+
+//remove a card from the current deck and return that card
+std::string Deck::removeCard() {
+    std::string chosenCard = "";
+
+    if (!isEmpty()) {
+        int pos = -1; //if -1 then none chosen
+
+        if (currentDeck.size() != 1) {
+        pos = rand() % (currentDeck.size()-1); //this position will be from 0-(size-1) randomly chosen
+        }
+        else {
+            pos = 0;
+        }
+
+        if (pos == -1) {
+            throw std::invalid_argument("received negative value for removeCard() pos");
+        }
+
+        chosenCard = currentDeck.at(pos);
+        currentDeck.erase(currentDeck.begin() + pos);
+    }
+
+    return chosenCard;
 }

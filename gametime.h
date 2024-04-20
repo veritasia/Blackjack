@@ -44,6 +44,12 @@ void startBlackjack() {
             std::cout << "Not a valid input. Try again.";
         }
         std::cout << std::endl;
-    } while (choice != 0 || choice != 1);
-}
+    } while (choice != 0 && choice != 1);
 
+    Deck currDeck;
+    currDeck.resetDeck();
+
+    std::cout << "Let us begin!" << std::endl;
+
+    currDeck.displayDeck();
+}

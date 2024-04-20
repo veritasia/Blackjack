@@ -14,7 +14,8 @@ public:
     Deck() : currentDeck() {}
     void resetDeck();
     void displayDeck();
-    void removeCard();
+    std::string removeCard();
+    bool isEmpty() { return currentDeck.empty(); }
 };
 
 #endif
