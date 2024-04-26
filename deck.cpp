@@ -24,6 +24,7 @@ void Deck::resetDeck() {
 }
 
 //displays everything in the current deck
+//used for testing
 void Deck::displayDeck() {
     int i = 0;
     for (auto elem : currentDeck)

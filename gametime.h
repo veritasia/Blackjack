@@ -20,15 +20,45 @@ int ynInputValidation(std::string input)
     }
 }
 
+int winCondition(Hand handy) {
+    if (handy.getCurrTotal() == 21) {
+        return 1;
+    }
+    else if (handy.getCurrTotal() > 21) {
+        return -1;
+    }
+    else {
+        return 0;
+    }
+}
+
+int winCondition(Hand handy, Hand dealer)
+{
+    if (handy.getCurrTotal() == 21 || ((dealer.getCurrTotal() > 21) && (handy.getCurrTotal() < dealer.getCurrTotal())))
+    {
+        return 1;//win condition
+    }
+    else if ((handy.getCurrTotal() > 21) && (dealer.getCurrTotal() > 21)) {
+        return 2; //tie condition
+    }
+    else if (handy.getCurrTotal() > 21)
+    {
+        return -1; //lose condition
+    }
+    else
+    {
+        return 0; //continue condition
+    }
+}
+
 void startBlackjack() {
     int choice;
+    std::string response;
 
     //loop to keep doing the intro
     do
     {
         std::cout << "Would you like to play a round of Blackjack? (y/n)" << std::endl;
-
-        std::string response;
         std::cin >> response;
 
         choice = ynInputValidation(response);
@@ -46,10 +76,51 @@ void startBlackjack() {
         std::cout << std::endl;
     } while (choice != 0 && choice != 1);
 
-    Deck currDeck;
-    currDeck.resetDeck();
+    Hand handy;
+    //Hand dealer;
+    handy.restartBlackjackDeck();
+    //dealer.restartBlackjackDeck();
 
     std::cout << "Let us begin!" << std::endl;
+    
+    handy.hit();
+    handy.hit();
+    handy.displayHand();
 
-    currDeck.displayDeck();
+    // dealer.hit();
+    // dealer.hit();
+    // dealer.displayHand();
+
+    while (winCondition(handy) == 0) {
+
+        std::cout << "do you want to hit? (y/n)\n";
+        std::cin >> response;
+
+        choice = ynInputValidation(response);
+
+        if (choice == 1) {
+            handy.hit();
+        }
+        else if (choice == 0) {
+            std::cout << "not bad, please code stand conditions \n";
+            break;
+        }
+        else {
+            std::cout << "not a valid response, try again. \n";
+        }
+    }  
+
+    if (winCondition(handy) == -1) {
+        std::cout << "You busted\n";
+    }
+    else if (winCondition(handy) == 1) {
+        std::cout << "You got exactly 21!\n";
+    }
+    else {
+        std::cout << "Something may have gone wrong\n";
+    }
+
+    handy.displayHand();
+
+    //handy.displayBlackjackDeck();
 }
