@@ -3,6 +3,7 @@
 #include <string>
 #include "deck.h"
 #include "hand.h"
+#include "dealer.h"
 
 int ynInputValidation(std::string input)
 {
@@ -32,7 +33,7 @@ int winCondition(Hand handy) {
     }
 }
 
-int winCondition(Hand handy, Hand dealer)
+int winCondition(Hand handy, Dealer dealer)
 {
     if (handy.getCurrTotal() == 21 || ((dealer.getCurrTotal() > 21) && (handy.getCurrTotal() < dealer.getCurrTotal())))
     {
@@ -77,9 +78,10 @@ void startBlackjack() {
     } while (choice != 0 && choice != 1);
 
     Hand handy;
-    //Hand dealer;
+    Dealer dealer;
     handy.restartBlackjackDeck();
-    //dealer.restartBlackjackDeck();
+    dealer.restartBlackjackDeck();
+    // dealer.restartBlackjackDeck();
 
     std::cout << "Let us begin!" << std::endl;
     
@@ -87,9 +89,9 @@ void startBlackjack() {
     handy.hit();
     handy.displayHand();
 
-    // dealer.hit();
-    // dealer.hit();
-    // dealer.displayHand();
+    dealer.hit();
+    dealer.hit();
+    dealer.displayHand();
 
     while (winCondition(handy) == 0) {
 

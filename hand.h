@@ -7,7 +7,7 @@
 #include "deck.h"
 
 class Hand {
-    private:
+    protected:
         std::vector<std::string> currHand;
         int currTotal = 0;
         int currTotalwithAce = 0;
@@ -19,7 +19,7 @@ class Hand {
         int getCurrTotal();
         void hit();
         int identifyCard(std::string);
-        void displayHand();
+        virtual void displayHand();
         void restartBlackjackDeck();
         void displayBlackjackDeck();
 };
