@@ -26,7 +26,7 @@ void Hand::countCards() {
         currTotal += identifyCard((currHand.at(i)));
     }
 
-    std::cout << "output currtotal in countCards " << currTotal << std::endl;
+    //std::cout << "output currtotal in countCards " << currTotal << std::endl;
 }
 
 //gotta get whatever is in your current Deck
@@ -39,6 +39,7 @@ void Hand::hit() {
     }
 
     //put it in your hand
+    std::cout << "You pulled a " << chosenCard << std::endl;
     currHand.push_back(chosenCard);
     countCards();
 }
@@ -100,6 +101,8 @@ int Hand::identifyCard(std::string card) {
 
 //gotta know what is in your hand
 void Hand::displayHand() {
+    std::cout << "----------------" << std::endl;
+    std::cout << "Your current hand\n";
     int i = 0;
     for (auto elem : currHand)
     {

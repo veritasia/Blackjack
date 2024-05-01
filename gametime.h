@@ -21,8 +21,11 @@ int ynInputValidation(std::string input)
     }
 }
 
-int winCondition(Hand handy) {
-    if (handy.getCurrTotal() == 21) {
+int dealerStand(Dealer handy) {
+    int dealerCount = handy.getCurrTotal();
+
+    if ((dealerCount == 21) || (dealerCount == 20) || (dealerCount == 19) || (dealerCount == 18) || (dealerCount == 17))
+    {
         return 1;
     }
     else if (handy.getCurrTotal() > 21) {
@@ -35,12 +38,21 @@ int winCondition(Hand handy) {
 
 int winCondition(Hand handy, Dealer dealer)
 {
-    if (handy.getCurrTotal() == 21 || ((dealer.getCurrTotal() > 21) && (handy.getCurrTotal() < dealer.getCurrTotal())))
+    if (handy.getCurrTotal() == 21)
     {
         return 1;//win condition
     }
-    else if ((handy.getCurrTotal() > 21) && (dealer.getCurrTotal() > 21)) {
+    else if ((handy.getCurrTotal() < 21) && (handy.getCurrTotal() > dealer.getCurrTotal())) {
+        return 3; //another win condition
+    }
+    else if ((handy.getCurrTotal() < 21) && (dealer.getCurrTotal() > 21)) {
+        return 3;
+    }
+    else if ((handy.getCurrTotal() > 21) && (dealer.getCurrTotal() > 21 && (dealer.getCurrTotal() == handy.getCurrTotal()))) {
         return 2; //tie condition
+    }
+    else if (handy.getCurrTotal() == (dealer.getCurrTotal())) {
+        return 2; // another tie condition;
     }
     else if (handy.getCurrTotal() > 21)
     {
@@ -88,13 +100,16 @@ void startBlackjack() {
     handy.hit();
     handy.hit();
     handy.displayHand();
+    std::cout << std::endl;
 
     dealer.hit();
     dealer.hit();
     dealer.displayHand();
+    std::cout << std::endl;
 
-    while (winCondition(handy) == 0) {
+    while ((winCondition(handy, dealer) == 0) || (winCondition(handy, dealer) == 3)) {
 
+        handy.displayHand();
         std::cout << "do you want to hit? (y/n)\n";
         std::cin >> response;
 
@@ -102,21 +117,40 @@ void startBlackjack() {
 
         if (choice == 1) {
             handy.hit();
+            std::cout << std::endl;
         }
         else if (choice == 0) {
-            std::cout << "not bad, please code stand conditions \n";
+            std::cout << "you stayed your hand\n";
             break;
         }
         else {
             std::cout << "not a valid response, try again. \n";
         }
-    }  
+    }
 
-    if (winCondition(handy) == -1) {
+    //only have dealer pull if the player's hand has less than 21 points
+    if ((handy.getCurrTotal() < 21)) {
+        while (dealerStand(dealer) == 0) {
+            dealer.hit();
+            std::cout << std::endl;
+        }
+    }
+
+    dealer.displayHand();
+
+    std::cout << "Let's see if you've won something\n\n";
+
+    if (winCondition(handy, dealer) == -1) {
         std::cout << "You busted\n";
     }
-    else if (winCondition(handy) == 1) {
+    else if (winCondition(handy, dealer) == 1) {
         std::cout << "You got exactly 21!\n";
+    }
+    else if (winCondition(handy, dealer) == 3) {
+        std::cout << "you won!\n";
+    }
+    else if (winCondition(handy, dealer) == 2) {
+        std::cout << "You and the dealer tied!\n";
     }
     else {
         std::cout << "Something may have gone wrong\n";

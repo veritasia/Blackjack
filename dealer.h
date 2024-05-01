@@ -8,6 +8,7 @@ class Dealer: public Hand {
     private:
     public:
         void displayHand() override;
+        void hit() override;
 };
 
 #endif

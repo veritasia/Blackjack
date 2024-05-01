@@ -17,7 +17,7 @@ class Hand {
     public:
         void countCards();
         int getCurrTotal();
-        void hit();
+        virtual void hit();
         int identifyCard(std::string);
         virtual void displayHand();
         void restartBlackjackDeck();
