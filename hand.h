@@ -22,6 +22,7 @@ class Hand {
         virtual void displayHand();
         void restartBlackjackDeck();
         void displayBlackjackDeck();
+        void clearHand();
 };
 
 #endif

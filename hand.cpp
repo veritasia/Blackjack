@@ -124,3 +124,10 @@ void Hand::displayHand() {
         std::cout << currTotalwithAce << std::endl;
     }
 }
+
+void Hand::clearHand() {
+    currHand.clear();
+    currTotal = 0;
+    currTotalwithAce = 0;
+    hasAce = false;
+}
