@@ -38,7 +38,10 @@ int dealerStand(Dealer handy) {
 
 int winCondition(Hand handy, Dealer dealer)
 {
-    if (handy.getCurrTotal() == 21)
+    int currTotal = handy.getCurrTotal();
+    int currTotalWithAce = handy.getCurrTotalWithAce();
+
+    if ((currTotal == 21) || (currTotalWithAce == 21))
     {
         return 1;//win condition
     }

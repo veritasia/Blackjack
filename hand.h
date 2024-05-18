@@ -17,12 +17,14 @@ class Hand {
     public:
         void countCards();
         int getCurrTotal();
+        int getCurrTotalWithAce();
         virtual void hit();
         int identifyCard(std::string);
         virtual void displayHand();
         void restartBlackjackDeck();
         void displayBlackjackDeck();
         void clearHand();
+        
 };
 
 #endif

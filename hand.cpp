@@ -14,6 +14,11 @@ int Hand::getCurrTotal() {
     return currTotal;
 }
 
+int Hand::getCurrTotalWithAce()
+{
+    return currTotalwithAce;
+}
+
 void Hand::displayBlackjackDeck() {
     blackjackDeck.displayDeck();
 }
@@ -23,7 +28,16 @@ void Hand::countCards() {
 
     for (int i = currHand.size()-1; i < currHand.size(); i++)
     {
-        currTotal += identifyCard((currHand.at(i)));
+        int currNum = identifyCard((currHand.at(i)));
+        currTotal += currNum;
+        if (hasAce) {
+            if (currNum == 11) {
+                currTotalwithAce += 1;
+            }
+            else {
+                currTotalwithAce += currNum;
+            }
+        }
     }
 
     //std::cout << "output currtotal in countCards " << currTotal << std::endl;
@@ -93,6 +107,10 @@ int Hand::identifyCard(std::string card) {
     {
         num = 11;
         hasAce = true;
+        if (hasAce) {
+            currTotalwithAce = currTotal;
+            currTotalwithAce += 1;
+        }
         // i need to deal with where there are two aces
     }
 
